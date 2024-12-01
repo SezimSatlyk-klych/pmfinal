@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Universities</title>
+    <style>
+        /* Styling remains the same */
+        :root {
+            --primary-color: #4caf50;
+            --secondary-color: #ffffff;
+            --accent-color: #2c3e50;
+            --background-color: #f9f9f9;
+            --text-color: #333333;
+            --text-light: #7f8c8d;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .sidebar .logo img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+        }
+
+        .sidebar nav ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar nav ul li a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            display: block;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .sidebar nav ul li a:hover,
+        .sidebar nav ul li a.active {
+            background-color: var(--primary-color);
+            transform: translateX(10px);
+        }
+
+        main {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: var(--background-color);
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .user-profile {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px var(--shadow-color);
+            margin-bottom: 20px;
+        }
+
+        .university-card {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px var(--shadow-color);
+            margin-bottom: 15px;
+        }
+
+        .university-card h2 {
+            margin: 0 0 10px;
+            color: var(--accent-color);
+        }
+
+        .university-card p {
+            color: var(--text-light);
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo"><img src="icon2.png" alt="Logo"></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Profile</a></li>
+                    <li><a href="masdeg.html">Search Universities</a></li>
+                    <li><a href="gemini.html">Ask Gemini</a></li>
+                    <li><a href="history.html">History</a></li>
+                    <li><a href="ourteam.html">Our Team</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- User Profile Section -->
+            <div class="user-profile" id="user-profile">
+                <h2>User Profile</h2>
+                <p id="profile-name"></p>
+                <p id="profile-email"></p>
+                <p id="profile-course"></p>
+            </div>
+
+            <!-- University List -->
+            <div id="university-list">
+                <h1>Available Universities</h1>
+                <p>Loading universities...</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_URL = "http://165.22.92.190:8000"; // Backend API URL
+        const token = localStorage.getItem('token'); // Retrieve token from localStorage
+    
+        const firstname = localStorage.getItem('firstname');
+        const lastname = localStorage.getItem('lastname');
+        const email = localStorage.getItem('email');
+        const gpa = parseFloat(localStorage.getItem('gpa')); // User's GPA as float
+        const ielts = parseFloat(localStorage.getItem('ielts')); // User's IELTS score as float
+    
+        // Populate user profile
+        document.getElementById("profile-name").textContent = `Name: ${firstname} ${lastname}`;
+        document.getElementById("profile-email").textContent = `Email: ${email}`;
+        document.getElementById("profile-course").textContent = "Preferred Course: Master's in Computer Science";
+    
+        // Fetch universities filtered by user inputs
+        async function fetchUniversities() {
+            try {
+                const response = await fetch(`${API_URL}/edu/masters_by_gpa_ielts?max_gpa=${gpa}&max_ielts=${ielts}`, {
+                    method: "GET",
+                    headers: {
+                        "Auth": `${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+    
+                if (!response.ok) {
+                    throw new Error("Failed to fetch universities");
+                }
+    
+                const data = await response.json();
+                
+                console.log(data);
+                filterAndDisplayUniversities(data);
+            } catch (error) {
+                console.error("Error fetching universities:", error);
+                document.getElementById("university-list").innerHTML = "<p>Failed to load universities.</p>";
+            }
+        }
+    
+        // Filter and display universities based on user inputs
+        function filterAndDisplayUniversities(programs) {
+            const universityList = document.getElementById("university-list");
+            universityList.innerHTML = ""; // Clear previous content
+    
+            if (!programs || programs.length === 0) {
+                universityList.innerHTML = "<p>No universities match your criteria.</p>";
+                return;
+            }
+    
+            programs.forEach(program => {
+                const card = document.createElement("div");
+                card.classList.add("university-card");
+                card.innerHTML = ` 
+                    <h2>${program.master_name}</h2>
+                    <p>Minimum GPA: ${program.min_gpa}</p>
+                    <p>Minimum IELTS: ${program.min_ielts}</p>
+                `;
+                universityList.appendChild(card);
+            });
+        }
+    
+        // Load universities on page load
+        fetchUniversities();
+    </script>
+</body>
+</html>

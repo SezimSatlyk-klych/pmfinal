@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="indexstyle.css">
+    <script>
+        function saves() {
+            const gpa = document.getElementById('gpa').value;
+            const ielts = document.getElementById('ielts').value;
+            const experienceYears = document.getElementById('experience-years').value;
+            const experienceField = document.getElementById('experience-field').value;
+            const majorPreference = document.getElementById('major-preference').value;
+
+            localStorage.setItem('gpa', gpa);
+            localStorage.setItem('ielts', ielts);
+            localStorage.setItem('experienceYears', experienceYears);
+            localStorage.setItem('experienceField', experienceField);
+            localStorage.setItem('majorPreference', majorPreference);
+            console.log(localStorage.getItem('gpa'));
+        }
+
+        window.onload = function() {
+            // Retrieve values from localStorage or use default values
+            const gpa = localStorage.getItem('gpa') || 3.5;
+            const ielts = localStorage.getItem('ielts') || 7.5;
+            const experienceYears = localStorage.getItem('experienceYears') || 5;
+            const experienceField = localStorage.getItem('experienceField') || "IT";
+            const majorPreference = localStorage.getItem('majorPreference') || "Computer Science";
+
+            // Set values in the input fields
+            document.getElementById('gpa').value = gpa;
+            document.getElementById('ielts').value = ielts;
+            document.getElementById('experience-years').value = experienceYears;
+            document.getElementById('experience-field').value = experienceField;
+            document.getElementById('major-preference').value = majorPreference;
+
+            // Retrieve and set static data from localStorage
+            const firstname = localStorage.getItem('firstname') || "Jane";
+            const lastname = localStorage.getItem('lastname') || "Smith";
+            const course = localStorage.getItem('course') || "Master's in Computer Science";
+            const university = localStorage.getItem('university') || "University of Excellence";
+
+            document.getElementById('user-name').textContent = `${firstname} ${lastname}`;
+            document.getElementById('name').value = `${firstname} ${lastname}`;
+            document.getElementById('user-course').textContent = course;
+            document.getElementById('course').value = course;
+            document.getElementById('user-university').textContent = university;
+            document.getElementById('university').value = university;
+
+            // Make name field readonly
+            document.getElementById('name').setAttribute('readonly', true);
+        }
+    </script>
+   
+
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo"><img src="icon2.png" alt="study"></div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Profile</a></li>
+                    <li><a href="masdeg.html">Search Universities</a></li>
+                    <li><a href="gemini.html">Ask Gemini</a></li>
+                    <li><a href="history.html">History</a></li>
+                    <li><a href="ourteam.html">Our Team</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <a href="login.html">Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <header class="header">
+                <div class="user-photo">
+                    <img src="profile.jpeg" alt="Student Photo">
+                </div>
+                <div class="user-info">
+                    <h1 id="user-name">Jane Smith</h1>
+                    <p id="user-course">Master's in Computer Science</p>
+                    <p id="user-university">University of Excellence</p>
+                </div>
+            </header>
+
+            <!-- Profile Edit Form -->
+            <section>
+                <h2>Edit Profile</h2>
+                <form id="edit-profile-form">
+                    <div>
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" value="Jane Smith" readonly>
+                    </div>
+                    <div>
+                        <label for="course">Course:</label>
+                        <input type="text" id="course" name="course" value="4">
+                    </div>
+                    <div>
+                        <label for="university">University:</label>
+                        <input type="text" id="university" name="university" value="University of Excellence">
+                    </div>
+                    <div>
+                        <label for="gpa">GPA:</label>
+                        <input type="number" id="gpa" name="gpa" min="2" max="4" step="0.5"> 
+                    </div>
+                    <div>
+                        <label for="ielts">IELTS:</label>
+                        <input type="number" id="ielts" name="ielts">
+                    </div>
+                    <div>
+                        <label for="experience-years">Work Experience (Years):</label>
+                        <input type="text" id="experience-years" name="experience-years" value="5">
+                    </div>
+                    <div>
+                        <label for="experience-field">Work Experience Field:</label>
+                        <input type="text" id="experience-field" name="experience-field" value="IT">
+                    </div>
+                    <div>
+                        <label for="major-preference">Major Preference:</label>
+                        <input type="text" id="major-preference" name="major-preference" value="Computer Science">
+                    </div>
+                    <button type="submit" onclick="saves()">Save Changes</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Извлечение данных из localStorage
+        const token = localStorage.getItem('token');
+        const firstname = localStorage.getItem('firstname');
+        const lastname = localStorage.getItem('lastname');
+        const email = localStorage.getItem('email');
+        const gpa = localStorage.getItem('gpa');
+        const ielts = localStorage.getItem('ielts');
+        const experienceYears = localStorage.getItem('experienceYears');
+        const experienceField = localStorage.getItem('experienceField');
+        const majorPreference = localStorage.getItem('majorPreference');
+
+        // Обновляем статичные данные
+        document.getElementById('user-name').textContent = `${firstname} ${lastname}`;
+        document.getElementById('name').value = `${firstname} ${lastname}`; // делаем имя и фамилию статичными
+        document.getElementById('user-course').textContent = "Master's in Computer Science"; // Можно также обновить из localStorage, если нужно
+        document.getElementById('course').value = `${course}` ;// Можно также обновить из localStorage
+        document.getElementById('user-university').textContent = "University of Excellence"; // Можно также обновить из localStorage
+        document.getElementById('gpa').value = `${gpa}` || 3.5; // Можно также обновить из localStorage
+        document.getElementById('ielts').value = `${ielts}` || 7.5; // Можно также обновить из localStorage
+        // document.getElementById('experience').value = `${experienceYears}` || 5; // Можно также обновить из localStorage
+
+        // Блокируем поля с именем и фамилией для редактирования
+        document.getElementById('name').setAttribute('readonly', true);
+        
+        document.getElementById('edit-profile-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const course = document.getElementById('course').value;
+            const university = document.getElementById('university').value;
+            const gpa = document.getElementById('gpa').value;
+            const ielts = document.getElementById('ielts').value;
+            const experienceYears = document.getElementById('experience-years').value;
+            const experienceField = document.getElementById('experience-field').value;
+            const majorPreference = document.getElementById('major-preference').value;
+
+            alert('Profile updated!');
+        });
+    </script>
+</body>
+</html>

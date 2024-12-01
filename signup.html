@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Основные переменные */
+        :root {
+            --primary-color: #4caf50; /* Основной цвет */
+            --secondary-color: #ffffff; /* Белый */
+            --background-color: #f9f9f9; /* Фоновый цвет */
+            --text-color: #333333; /* Основной текст */
+            --text-light: #7f8c8d; /* Светлый текст */
+            --shadow-color: rgba(0, 0, 0, 0.1); /* Тень */
+            --border-radius: 10px; /* Скругленные углы */
+            --button-hover: #388e3c; /* Цвет кнопки при наведении */
+        }
+
+        /* Сброс стилей */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        /* Sign Up Form */
+        .signup-card {
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px var(--shadow-color);
+            padding: 40px;
+            width: 50%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .signup-card .logo img {
+            max-width: 150px; /* Размер логотипа */
+            height: auto;
+            border-radius: var(--border-radius); /* Скругленные углы (опционально) */
+        }
+
+        .signup-card h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .signup-card p {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--shadow-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background-color: #fafafa;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.2rem;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--button-hover);
+        }
+
+        .switch-link {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .switch-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .switch-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Marketing Section */
+        .marketing-section {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 40px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .marketing-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .marketing-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .marketing-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .signup-card, .marketing-section {
+                width: 100%;
+            }
+
+            .marketing-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sign Up Form -->
+        <div class="signup-card">
+            <div class="logo">
+                <img src="icons8-study-100.png" alt="Company Logo">
+            </div>
+            <h1>Sign Up</h1>
+            <p>Create your account to get started</p>
+            <form id="signup-form">
+                <div class="form-group">
+                    <input type="text" name="firstname" placeholder="FirstName" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="lastname" placeholder="LastName" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+                <p class="switch-link">Already have an account? <a href="login.html">Log in here</a></p>
+            </form>
+        </div>
+
+        <!-- Marketing Section -->
+        <div class="marketing-section">
+            <h2>Welcome to Your New Journey!</h2>
+            <p>Join us today and take the first step towards success and endless opportunities.</p>
+            <div class="marketing-image">
+                <img src="stanford.jpg" alt="Motivational Image">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Проверяем, есть ли токен при загрузке страницы
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                console.log('User already logged in with token:', token);
+            }
+        });
+
+        // Обработчик формы
+        document.getElementById('signup-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = {
+                firstname: e.target.firstname.value,
+                lastname: e.target.lastname.value,
+                email: e.target.email.value,
+                password: e.target.password.value,
+            };
+
+            try {
+                const response = await fetch('http://165.22.92.190:8000/auth/sign-up', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error: ' + response.statusText);
+                }
+                const data = await response.json();
+
+                // Сохраняем токен в localStorage
+                if (data) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('name', data.firstname);
+                    localStorage.setItem('lastname', data.lastname);
+                    localStorage.setItem('email', data.email);
+                    alert('Registration successful! Token saved.');
+                    window.location.href = 'login.html'; // Перенаправление
+                } else {
+                    alert('Registration successful but no token received.');
+                }
+
+            } catch (error) {
+                console.error('Error:', error.message);
+                alert('Failed to register. Please try again.');
+            }
+        });
+    </script>
+
+</body>
+</html>
